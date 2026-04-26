@@ -5,8 +5,8 @@
     "name": "ecowitt_influx_v2",
     "namespace": "default",
     "uid": "1ed0a1aa-211d-4127-958a-2e4c614dd492",
-    "resourceVersion": "1777181342814016",
-    "generation": 114,
+    "resourceVersion": "1777181953773003",
+    "generation": 115,
     "creationTimestamp": "2026-04-18T11:34:21Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "831726852472832"
@@ -16,7 +16,7 @@
       "grafana.app/folder": "",
       "grafana.app/saved-from-ui": "Grafana v13.0.1 (a100054f)",
       "grafana.app/updatedBy": "user:bfjg4a4jg6ccgf",
-      "grafana.app/updatedTimestamp": "2026-04-26T05:29:02Z"
+      "grafana.app/updatedTimestamp": "2026-04-26T05:39:13Z"
     }
   },
   "spec": {
@@ -3129,9 +3129,9 @@
           {
             "kind": "RowsLayoutRow",
             "spec": {
-              "title": "Rainfall",
+              "title": "Regen",
               "collapse": false,
-              "hideHeader": true,
+              "hideHeader": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
