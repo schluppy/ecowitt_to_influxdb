@@ -60,3 +60,14 @@ Das Layout nutzt ein responsives Grid, das besonders gut auf Desktop-Monitoren u
 | `rain_day_mm` | Tagesniederschlag | mm |
 | `uv` | UV-Index | Index (0-12) |
 | `solar_wm2` | Sonneneinstrahlung | $W/m^2$ |
+
+## Bilder des Dashboards
+
+
+<img width="3391" height="998" alt="DashBoard-1" src="https://github.com/user-attachments/assets/f5868432-8d84-4cfe-96c6-747f2fb31313" />
+
+<img width="3394" height="1130" alt="DashBoard-2" src="https://github.com/user-attachments/assets/c940ff3f-ae18-464e-a85d-69970994b313" />
+
+<img width="3393" height="334" alt="DashBoard-3" src="https://github.com/user-attachments/assets/047044e2-ac17-4748-be18-0e350ca2c246" />
+
+
