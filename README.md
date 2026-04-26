@@ -31,7 +31,7 @@ Erstelle ein Verzeichnis für das Skript (z. B. `~/ecowitt-direct`) und lege dor
 url = http://localhost:8086
 token = DEIN_INFLUX_TOKEN
 org = DEINE_ORG
-bucket = wetterstation
+bucket = wetter_station
 
 [server]
 port = 8090
@@ -83,7 +83,7 @@ Um sicherzustellen, dass das Skript nach einem Neustart automatisch startet, wir
 4.  Server IP: Die IP deines Linux-Servers.
 5.  Path: `/data/report/`
 6.  Port: `8090`
-7.  Interval: `16` (oder gewünschter Wert).
+7.  Interval: `16` (Alle 16 Sekunden hat sich als ein guter Wert gezeigt).
 
 ## 6. Ermittlung des Passkeys (Lern-Modus)
 
