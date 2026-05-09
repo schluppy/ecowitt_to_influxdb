@@ -16,9 +16,7 @@ config.read('ecowitt.conf')
 try:
     DEBUG = config.getboolean('settings', 'debug')
     PORT = config.getint('server', 'port')
-    # Passkey einlesen und Leerzeichen entfernen
-    CONF_PASSKEY = config.get('server', 'passkey').strip()
-    
+    PASSKEY = config.get('server', 'passkey')
     INFLUX_URL = config.get('influxdb', 'url')
     INFLUX_TOKEN = config.get('influxdb', 'token')
     INFLUX_ORG = config.get('influxdb', 'org')
@@ -33,7 +31,7 @@ app = Flask(__name__)
 client = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN, org=INFLUX_ORG)
 write_api = client.write_api(write_options=SYNCHRONOUS)
 
-# --- Metrische Umrechnungsfunktionen ---
+# --- Umrechnungsfunktionen ---
 
 def f_to_c(val): 
     return round((float(val) - 32) * 5/9, 2) if val is not None else 0.0
@@ -65,26 +63,16 @@ def kmh_to_bft(kmh):
 @app.route('/data/report/', methods=['POST'])
 def receive_data():
     raw = request.form.to_dict()
-    recv_key = raw.get('PASSKEY')
     
-    # --- PASSKEY LOGIK ---
-    if CONF_PASSKEY.upper() != "NONE":
-        if recv_key != CONF_PASSKEY:
-            if DEBUG: 
-                print(f"!!! ZUGRIFF VERWEIGERT: Falscher Passkey: {recv_key}")
-            return "Unauthorized", 401
-    elif DEBUG:
-        # Im Lern-Modus (NONE) zeigen wir den Key prominent an
-        print(f"\n{'*' * 70}")
-        print(f" LERN-MODUS AKTIV! Empfangener PASSKEY: {recv_key}")
-        print(f" Bitte diesen Key in der ecowitt.conf eintragen.")
-        print(f"{'*' * 70}")
+    # Sicherheitscheck: Passkey
+    if raw.get('PASSKEY') != PASSKEY:
+        return "Unauthorized", 401
 
     try:
-        # Grundwerte für Wind berechnen
+        # Grundwerte berechnen
         wind_kmh = mph_to_kmh(raw.get('windspeedmph'))
         
-        # 1. Metrische Daten zusammenstellen
+        # 1. Metrisches Daten-Dictionary erstellen
         m = {
             "temp_in_c": f_to_c(raw.get('tempinf')),
             "temp_out_c": f_to_c(raw.get('tempf')),
@@ -99,7 +87,7 @@ def receive_data():
             "wind_gust_kmh": mph_to_kmh(raw.get('windgustmph')),
             "wind_max_daily_kmh": mph_to_kmh(raw.get('maxdailygust')),
             
-            # Alle Piezo Regenwerte (mm)
+            # Alle Piezo Regenwerte
             "rain_rate_mm": in_to_mm(raw.get('rrain_piezo')),
             "rain_event_mm": in_to_mm(raw.get('erain_piezo')),
             "rain_hour_mm": in_to_mm(raw.get('hrain_piezo')),
@@ -109,7 +97,42 @@ def receive_data():
             "rain_month_mm": in_to_mm(raw.get('mrain_piezo')),
             "rain_year_mm": in_to_mm(raw.get('yrain_piezo')),
             
-            # Sensordaten
+            # Licht und Sensordaten
             "solar_wm2": float(raw.get('solarradiation', 0.0)),
             "uv": int(raw.get('uv', 0)),
-            "vpd": float(raw.get('vpd',
+            "vpd": float(raw.get('vpd', 0.0)),
+            "batt_volt": float(raw.get('wh90batt', 0.0)),
+            "cap_volt": float(raw.get('ws90cap_volt', 0.0))
+        }
+
+        # 2. Debug-Ausgabe
+        if DEBUG:
+            print(f"\n{'='*75}")
+            print(f" DATENPAKET EMPFANGEN: {raw.get('dateutc', 'N/A')}")
+            print(f"{'='*75}")
+            print(f"{'FELDNAME':<20} | {'ROHWERT':<15} | {'METRISCH'}")
+            print(f"{'-'*75}")
+            print(f"{'Temp Out':<20} | {raw.get('tempf', 'N/A') + ' F':<15} | {m['temp_out_c']} °C")
+            print(f"{'Wind Speed':<20} | {raw.get('windspeedmph', 'N/A') + ' mph':<15} | {m['wind_speed_kmh']} km/h ({m['wind_bft']} Bft)")
+            print(f"{'Rain Day':<20} | {raw.get('drain_piezo', 'N/A') + ' in':<15} | {m['rain_day_mm']} mm")
+            print(f"{'Rain 24h':<20} | {raw.get('last24hrain_piezo', 'N/A') + ' in':<15} | {m['rain_24h_mm']} mm")
+            print(f"{'Pressure Rel':<20} | {raw.get('baromrelin', 'N/A') + ' inHg':<15} | {m['press_rel_hpa']} hPa")
+            print(f"{'Batt Volt':<20} | {raw.get('wh90batt', 'N/A') + ' V':<15} | {m['batt_volt']} V")
+            print(f"{'-'*75}")
+            print(f"ALLE ROHDATEN: {raw}")
+            print(f"{'='*75}\n")
+
+        # 3. InfluxDB Point bauen und schreiben
+        p = Point("weather_station").tag("model", raw.get('model', 'Unknown'))
+        for field, value in m.items():
+            p.field(field, value)
+
+        write_api.write(INFLUX_BUCKET, INFLUX_ORG, p)
+        return "OK", 200
+
+    except Exception as e:
+        print(f"!!! FEHLER BEI VERARBEITUNG: {e}")
+        return str(e), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=PORT)
