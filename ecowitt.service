@@ -1,0 +1,16 @@
+[Unit]
+Description=Ecowitt to InfluxDB Listener
+After=network.target
+
+[Service]
+User=stefan
+WorkingDirectory=/opt/ecowitt
+EnvironmentFile=/etc/ecowitt/config.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 /opt/ecowitt/ecowitt_to_influxdb.py
+# Automatisch neu starten bei Absturz
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

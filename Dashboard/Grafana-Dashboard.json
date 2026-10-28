@@ -165,7 +165,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "wind_speed_kmh HP2564AE_Pro_V2.0.9"
+                      "options": "wind_speed_kmh HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -182,7 +182,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "wind_gust_kmh HP2564AE_Pro_V2.0.9"
+                      "options": "wind_gust_kmh HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -1271,7 +1271,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "rain_24h_mm HP2564AE_Pro_V2.0.9"
+                      "options": "rain_24h_mm HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -1292,7 +1292,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "rain_day_mm HP2564AE_Pro_V2.0.9"
+                      "options": "rain_day_mm HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -1305,7 +1305,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "rain_event_mm HP2564AE_Pro_V2.0.9"
+                      "options": "rain_event_mm HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -1318,7 +1318,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "rain_hour_mm HP2564AE_Pro_V2.0.9"
+                      "options": "rain_hour_mm HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -1331,7 +1331,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "rain_month_mm HP2564AE_Pro_V2.0.9"
+                      "options": "rain_month_mm HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -1344,7 +1344,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "rain_week_mm HP2564AE_Pro_V2.0.9"
+                      "options": "rain_week_mm HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -1357,7 +1357,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "rain_year_mm HP2564AE_Pro_V2.0.9"
+                      "options": "rain_year_mm HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -2609,7 +2609,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "hum_in HP2564AE_Pro_V2.0.9"
+                      "options": "hum_in HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -2630,7 +2630,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "temp_in_c HP2564AE_Pro_V2.0.9"
+                      "options": "temp_in_c HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -2861,7 +2861,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "hum_out HP2564AE_Pro_V2.0.9"
+                      "options": "hum_out HP2564AE_Pro"
                     },
                     "properties": [
                       {
@@ -2882,7 +2882,7 @@
                     "matcher": {
                       "id": "byName",
                       "scope": "series",
-                      "options": "temp_out_c HP2564AE_Pro_V2.0.9"
+                      "options": "temp_out_c HP2564AE_Pro"
                     },
                     "properties": [
                       {
