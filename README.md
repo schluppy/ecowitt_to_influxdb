@@ -42,11 +42,16 @@ per `EnvironmentFile` lädt:
 |---|---|---|
 | `ECOWITT_PASSKEY` | ja | – |
 | `INFLUX_TOKEN` | ja | – |
+| `ECOWITT_HOST` | nein | `0.0.0.0` (alle Schnittstellen); z. B. die VPN-IP, damit der Port nicht öffentlich erreichbar ist |
 | `ECOWITT_PORT` | nein | `8090` |
 | `ECOWITT_DEBUG` | nein | `false` |
 | `INFLUX_URL` | nein | `http://localhost:8086` |
 | `INFLUX_ORG` | nein | `Bergkoppel` |
 | `INFLUX_BUCKET` | nein | `wetterstation` |
+
+Bei `ECOWITT_HOST` mit einer VPN-IP in `ecowitt.service` `After=`/`Wants=`
+um die VPN-Unit ergänzen (z. B. `wg-quick@wg0.service`), sonst scheitert
+der Start beim Booten, bis die Schnittstelle da ist.
 
 Ein manueller Start ohne exportierte Variablen bricht mit
 „Fehlende Umgebungsvariable" ab.

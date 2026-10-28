@@ -1,6 +1,9 @@
 [Unit]
 Description=Ecowitt to InfluxDB Listener
-After=network.target
+# Bei Bindung an eine VPN-IP (ECOWITT_HOST) die Schnittstelle abwarten, z. B.
+# After=network-online.target wg-quick@wg0.service
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 User=stefan

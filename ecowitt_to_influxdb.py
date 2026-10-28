@@ -21,6 +21,8 @@ except KeyError as e:
     print(f"Fehlende Umgebungsvariable {e} - EnvironmentFile /etc/ecowitt/config.env geladen?")
     sys.exit(1)
 
+# Adresse, auf der Flask lauscht; 0.0.0.0 = alle Schnittstellen
+HOST = os.environ.get("ECOWITT_HOST", "0.0.0.0")
 PORT = int(os.environ.get("ECOWITT_PORT", "8090"))
 DEBUG = os.environ.get("ECOWITT_DEBUG", "false").lower() in ("1", "true", "yes")
 INFLUX_URL = os.environ.get("INFLUX_URL", "http://localhost:8086")
@@ -191,4 +193,4 @@ def receive_data():
         return str(e), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=PORT)
+    app.run(host=HOST, port=PORT)
